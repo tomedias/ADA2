@@ -55,34 +55,39 @@ public class Dream {
     public void move(Stack<Node> q,int r, int c,int moves, String state) {
 
         if (state.equals(RIGHT) && c + 1 < C) {
-            if (map[r][c + 1] != WALL) q.push(new Node(r, c + 1, moves, RIGHT));
-            else {
-                moveUpDown(q,r,c,moves);
-            }
+            moveUpDown(q,r,c,moves);
         } else if (state.equals(LEFT) && c - 1 >= 0) {
-            if (map[r][c - 1] != WALL) q.push(new Node(r, c - 1, moves, LEFT));
-            else {
-                moveUpDown(q,r,c,moves);
-            }
+            moveUpDown(q,r,c,moves);
         } else if (state.equals(UP) && r - 1 >= 0) {
-            if (map[r - 1][c] != WALL) q.push(new Node(r - 1, c, moves, UP));
-            else {
-                moveRightLeft(q,r,c,moves);
-            }
+            moveRightLeft(q,r,c,moves);
         } else if (state.equals(DOWN) && r + 1 < R) {
-            if (map[r + 1][c] != WALL) q.push(new Node(r + 1, c, moves, DOWN));
-            else {
-                moveRightLeft(q,r,c,moves);
-            }
+            moveRightLeft(q,r,c,moves);
         }
     }
 
     private void moveUpDown(Stack<Node> q,int r, int c, int moves){
-        if(r+1<R && map[r+1][c]!=WALL) q.push(new Node(r+1,c,moves+1,DOWN));
-        if(r-1>=0 && map[r-1][c]!=WALL) q.push(new Node(r-1, c , moves+1, UP));
+        int r1 = r;
+        int r2=r;
+        while(r1+1<R && map[r1+1][c]!=WALL && map[r1][c]!=END)
+            r1++;
+        if(r1+1<R && r1!=r)
+            q.push(new Node(r1,c,moves+1,DOWN));
+        while(r2-1>=0 && map[r2-1][c]!=WALL && map[r2][c]!=END)
+            r2--;
+        if(r2-1>=0 && r2!=r)
+            q.push(new Node(r2, c , moves+1, UP));
+
     }
     private void moveRightLeft(Stack<Node> q,int r, int c, int moves){
-        if(c+1<C && map[r][c+1]!=WALL) q.push(new Node(r, c+1, moves + 1, RIGHT));
-        if(c-1>=0 && map[r][c-1]!=WALL) q.push(new Node(r, c-1, moves + 1, LEFT));
+        int c1=c;
+        int c2 = c;
+        while(c1+1<C && map[r][c1+1]!=WALL && map[r][c1]!=END)
+            c1++;
+        if(c1+1<C && c1!=c)
+            q.push(new Node(r, c1, moves + 1, RIGHT));
+        while(c2-1>=0 && map[r][c2-1]!=WALL && map[r][c2]!=END)
+            c2--;
+        if(c2-1>=0 && c2!=c)
+            q.push(new Node(r, c2, moves + 1, LEFT));
     }
 }
