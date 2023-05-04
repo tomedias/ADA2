@@ -28,6 +28,7 @@ public class Dream {
     }
 
     public int solve(Node root){
+        bestMove=Integer.MAX_VALUE;
         list = new ArrayList<>();
         Queue<Node> q = new LinkedList<>();
         list.add(root);
@@ -44,7 +45,9 @@ public class Dream {
             c = cur.getC();
             moves = cur.getMoves();
             String state = cur.getState();
-            if(map[r][c]== END) bestMove = Math.min(bestMove, cur.getMoves());
+            if(map[r][c]== END){
+                bestMove = Math.min(bestMove, cur.getMoves());
+            }
             if(list.contains(cur)) continue;
             list.add(cur);
             move(q,r,c,moves,state);
@@ -63,21 +66,25 @@ public class Dream {
     }
 
     private void moveUpDown(Queue<Node> q,int r, int c, int moves){
+        if(moves+1>=bestMove) return;
         int r1 = r;
         int r2=r;
+
         while(r1+1<R && map[r1+1][c]!=WALL && map[r1][c]!=END)
             r1++;
-        if((r1+1<R ) || map[r1][c]==END && moves+1<bestMove)
+        if((r1+1<R ) || map[r1][c]==END)
             q.add(new Node(r1,c,moves+1,DOWN));
         while(r2-1>=0 && map[r2-1][c]!=WALL && map[r2][c]!=END)
             r2--;
-        if((r2-1>=0) || map[r2][c]==END && moves+1<bestMove)
+        if((r2-1>=0) || map[r2][c]==END)
             q.add(new Node(r2, c , moves+1, UP));
 
     }
     private void moveRightLeft(Queue<Node> q,int r, int c, int moves){
+        if(moves+1>=bestMove) return;
         int c1=c;
         int c2 = c;
+
         while(c1+1<C && map[r][c1+1]!=WALL && map[r][c1]!=END)
             c1++;
         if((c1+1<C) || map[r][c1]==END && moves+1<bestMove)
