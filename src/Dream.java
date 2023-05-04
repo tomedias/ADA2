@@ -14,6 +14,8 @@ public class Dream {
 
     public static final String DOWN = "down";
 
+    private int bestMove = Integer.MAX_VALUE;
+
     private final char[][] map;
     private final int R, C;
     private List<Node> list;
@@ -36,7 +38,6 @@ public class Dream {
         if(map[r][c]==END) return moves;
         moveUpDown(q, r, c, moves);
         moveRightLeft(q, r, c, moves);
-        int bestMove = Integer.MAX_VALUE;
         while(!q.isEmpty()){
             Node cur = q.poll();
             r = cur.getR();
@@ -66,11 +67,11 @@ public class Dream {
         int r2=r;
         while(r1+1<R && map[r1+1][c]!=WALL && map[r1][c]!=END)
             r1++;
-        if((r1+1<R ) || map[r1][c]==END)
+        if((r1+1<R ) || map[r1][c]==END && moves+1<bestMove)
             q.add(new Node(r1,c,moves+1,DOWN));
         while(r2-1>=0 && map[r2-1][c]!=WALL && map[r2][c]!=END)
             r2--;
-        if((r2-1>=0) || map[r2][c]==END)
+        if((r2-1>=0) || map[r2][c]==END && moves+1<bestMove)
             q.add(new Node(r2, c , moves+1, UP));
 
     }
@@ -79,11 +80,11 @@ public class Dream {
         int c2 = c;
         while(c1+1<C && map[r][c1+1]!=WALL && map[r][c1]!=END)
             c1++;
-        if((c1+1<C) || map[r][c1]==END)
+        if((c1+1<C) || map[r][c1]==END && moves+1<bestMove)
             q.add(new Node(r, c1, moves + 1, RIGHT));
         while(c2-1>=0 && map[r][c2-1]!=WALL && map[r][c2]!=END)
             c2--;
-        if((c2-1>=0) || map[r][c2]==END)
+        if((c2-1>=0) || map[r][c2]==END && moves+1<bestMove)
             q.add(new Node(r, c2, moves + 1, LEFT));
     }
 }
