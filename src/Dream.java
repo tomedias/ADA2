@@ -69,7 +69,6 @@ public class Dream {
         if(moves+1>=bestMove) return;
         int r1 = r;
         int r2=r;
-
         while(r1+1<R && map[r1+1][c]!=WALL && map[r1][c]!=END)
             r1++;
         if((r1+1<R ) || map[r1][c]==END)
@@ -87,11 +86,11 @@ public class Dream {
 
         while(c1+1<C && map[r][c1+1]!=WALL && map[r][c1]!=END)
             c1++;
-        if((c1+1<C) || map[r][c1]==END && moves+1<bestMove)
+        if((c1+1<C) || map[r][c1]==END)
             q.add(new Node(r, c1, moves + 1, RIGHT));
         while(c2-1>=0 && map[r][c2-1]!=WALL && map[r][c2]!=END)
             c2--;
-        if((c2-1>=0) || map[r][c2]==END && moves+1<bestMove)
+        if((c2-1>=0) || map[r][c2]==END)
             q.add(new Node(r, c2, moves + 1, LEFT));
     }
 }
