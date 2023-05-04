@@ -5,7 +5,6 @@ import java.io.InputStreamReader;
 public class Main {
 
     private static final String STUCK = "Stuck";
-
     private static final String STILL = "still";
 
     public static void main(String[] args) throws IOException {
