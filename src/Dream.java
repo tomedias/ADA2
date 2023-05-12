@@ -14,8 +14,9 @@ public class Dream {
 
     public static final String DOWN = "down";
 
-
     private final char[][] map;
+
+    private Node[][] graph;
     private final int R, C;
     private boolean[][] processed;
     public Dream(char[][] map, int R, int C) {
@@ -23,65 +24,90 @@ public class Dream {
         this.R = R;
         this.C = C;
         this.processed = new boolean[R][C];
+        this.graph = new Node[R][C];
 
     }
 
     public int solve(Node root){
         this.processed = new boolean[R][C];
-        Queue<Node> q = new LinkedList<>();
-        q.add(root);
-        while(!q.isEmpty()){
-            Node cur = q.poll();
+        Queue<Node> q1 = new LinkedList<>();
+        Queue<Node> q2 = new LinkedList<>();
+        q1.add(root);
+        int i =0;
+        while(!q1.isEmpty()){
 
-            int r = cur.getR();
-            int c = cur.getC();
-            if(processed[r][c]) continue;
-            int moves = cur.getMoves();
-            processed[r][c] = true;
-            String state = cur.getState();
-            Node n = move(q,r,c,moves,state);
-            if(n!=null) return n.getMoves();
+            i++;
+            do{
+                Node cur = q1.poll();
+                int r = cur.getR();
+                int c = cur.getC();
+                if(processed[r][c]) continue;
+                processed[r][c] = true;
+                String state = cur.getState();
+                graph[r][c] = cur;
+                Node n = move(q2,cur,state);
+                if(n!=null) return i;
+
+            }while(!q1.isEmpty());
+            q1 = q2;
+            q2 = new LinkedList<>();
         }
         return -1;
     }
 
-    public Node move(Queue<Node> q,int r, int c,int moves, String state) {
+    public Node move(Queue<Node> q,Node cur ,String state) {
         if (state.equals(RIGHT) || state.equals(LEFT)){
-            return moveUpDown(q,r,c,moves);
+            return moveUpDown(q,cur);
         } else if (state.equals(UP) || state.equals(DOWN)) {
-            return moveRightLeft(q,r,c,moves);
+            return moveRightLeft(q,cur);
         }else{
-            return moveRightLeft(q,r,c,moves)==null ? moveUpDown(q,r,c,moves) : moveRightLeft(q,r,c,moves);
+            return moveRightLeft(q,cur)==null ? moveUpDown(q,cur) : moveRightLeft(q,cur);
         }
     }
-    private Node moveUpDown(Queue<Node> q,int r, int c, int moves){
+    private Node moveUpDown(Queue<Node> q,Node cur){
+        int r = cur.getR();
+        int c = cur.getC();
         int r1 = r;
         int r2=r;
         while (r1 + 1 < R && map[r1 + 1][c] != WALL) {
             r1++;
-            if(map[r1][c]==END) return new Node(r1,c,moves+1,DOWN);
+            if(map[r1][c]==END) return new Node(r1,c,DOWN);
         }
-        if(r1+1<R) q.add(new Node(r1,c,moves+1,DOWN));
+        if(r1+1<R){
+            q.add(new Node(r1,c,DOWN));
+
+        }
         while(r2-1>=0 && map[r2 - 1][c] != WALL){
             r2--;
-            if(map[r2][c]==END) return new Node(r2,c,moves+1,UP);
+            if(map[r2][c]==END) return new Node(r2,c,UP);
         }
-        if(r2-1>=0) q.add(new Node(r2, c , moves+1, UP));
+        if(r2-1>=0){
+            q.add(new Node(r2, c ,  UP));
+
+        }
         return null;
     }
-    private Node moveRightLeft(Queue<Node> q,int r, int c, int moves){
+    private Node moveRightLeft(Queue<Node> q,Node cur){
+        int r = cur.getR();
+        int c = cur.getC();
         int c1=c;
         int c2 = c;
         while(c1+1<C && map[r][c1+1]!=WALL){
             c1++;
-            if(map[r][c1]==END) return new Node(r,c1,moves+1,RIGHT);
+            if(map[r][c1]==END) return new Node(r,c1,RIGHT);
         }
-        if((c1+1<C) || map[r][c1]==END) q.add(new Node(r, c1, moves + 1, RIGHT));
+        if((c1+1<C) || map[r][c1]==END){
+            q.add(new Node(r, c1, RIGHT));
+
+        }
         while(c2-1>=0 && map[r][c2-1]!=WALL){
             c2--;
-            if(map[r][c2]==END) return new Node(r,c2,moves+1,LEFT);
+            if(map[r][c2]==END) return new Node(r,c2,LEFT);
         }
-        if(c2-1>=0) q.add(new Node(r, c2, moves + 1, LEFT));
+        if(c2-1>=0){
+            q.add(new Node(r, c2,  LEFT));
+
+        }
         return null;
     }
 }

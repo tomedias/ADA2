@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -19,13 +20,16 @@ public class Main {
             map[i] = line.toCharArray();
         }
         Dream dream = new Dream(map, R, C);
+
         for(int i=0;i<T;i++) {
             String[] pos = in.readLine().split(" ");
             int r = Integer.parseInt(pos[0])-1;
             int c = Integer.parseInt(pos[1])-1;
-            int sol = dream.solve(new Node(r,c,0,STILL));
+            int sol = dream.solve(new Node(r,c,STILL));
             System.out.println(sol==-1 ? STUCK : sol);
         }
+
+
     }
 }
 

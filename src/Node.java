@@ -1,12 +1,17 @@
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class Node {
-    private final int r, c, moves;
+    private final int r, c;
     private final String state;
-    public Node(int r, int c, int moves,String state){
+
+
+    public Node(int r, int c,String state){
         this.r = r;
         this.c = c;
-        this.moves = moves;
         this.state = state;
+
     }
 
     public int getR() {
@@ -15,10 +20,6 @@ public class Node {
 
     public int getC() {
         return c;
-    }
-
-    public int getMoves() {
-        return moves;
     }
 
     public String getState() {
