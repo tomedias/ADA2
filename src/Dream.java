@@ -16,7 +16,6 @@ public class Dream {
 
     private final char[][] map;
 
-    private Node[][] graph;
     private final int R, C;
     private boolean[][] processed;
     public Dream(char[][] map, int R, int C) {
@@ -24,8 +23,6 @@ public class Dream {
         this.R = R;
         this.C = C;
         this.processed = new boolean[R][C];
-        this.graph = new Node[R][C];
-
     }
 
     public int solve(Node root){
@@ -35,7 +32,6 @@ public class Dream {
         q1.add(root);
         int i =0;
         while(!q1.isEmpty()){
-
             i++;
             do{
                 Node cur = q1.poll();
@@ -44,10 +40,8 @@ public class Dream {
                 if(processed[r][c]) continue;
                 processed[r][c] = true;
                 String state = cur.getState();
-                graph[r][c] = cur;
                 Node n = move(q2,cur,state);
                 if(n!=null) return i;
-
             }while(!q1.isEmpty());
             q1 = q2;
             q2 = new LinkedList<>();
@@ -75,7 +69,6 @@ public class Dream {
         }
         if(r1+1<R){
             q.add(new Node(r1,c,DOWN));
-
         }
         while(r2-1>=0 && map[r2 - 1][c] != WALL){
             r2--;
@@ -83,7 +76,6 @@ public class Dream {
         }
         if(r2-1>=0){
             q.add(new Node(r2, c ,  UP));
-
         }
         return null;
     }
@@ -98,15 +90,13 @@ public class Dream {
         }
         if((c1+1<C) || map[r][c1]==END){
             q.add(new Node(r, c1, RIGHT));
-
         }
         while(c2-1>=0 && map[r][c2-1]!=WALL){
             c2--;
             if(map[r][c2]==END) return new Node(r,c2,LEFT);
         }
         if(c2-1>=0){
-            q.add(new Node(r, c2,  LEFT));
-
+            q.add(new Node(r, c2,LEFT));
         }
         return null;
     }

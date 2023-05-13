@@ -28,8 +28,6 @@ public class Main {
             int sol = dream.solve(new Node(r,c,STILL));
             System.out.println(sol==-1 ? STUCK : sol);
         }
-
-
     }
 }
 

@@ -1,7 +1,3 @@
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 public class Node {
     private final int r, c;
     private final String state;
@@ -13,7 +9,6 @@ public class Node {
         this.state = state;
 
     }
-
     public int getR() {
         return r;
     }
@@ -25,14 +20,5 @@ public class Node {
     public String getState() {
         return state;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Node node = (Node) o;
-        return r == node.r && c == node.c;
-    }
-
 
 }
