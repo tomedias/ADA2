@@ -67,14 +67,14 @@ public class Dream {
             r1++;
             if(map[r1][c]==END) return new Node(r1,c,DOWN);
         }
-        if(r1+1<R){
+        if(r1+1<R && !processed[r1][c]){
             q.add(new Node(r1,c,DOWN));
         }
         while(r2-1>=0 && map[r2 - 1][c] != WALL){
             r2--;
             if(map[r2][c]==END) return new Node(r2,c,UP);
         }
-        if(r2-1>=0){
+        if(r2-1>=0 && !processed[r2][c]){
             q.add(new Node(r2, c ,  UP));
         }
         return null;
@@ -88,14 +88,15 @@ public class Dream {
             c1++;
             if(map[r][c1]==END) return new Node(r,c1,RIGHT);
         }
-        if((c1+1<C) || map[r][c1]==END){
+        if((c1+1<C) && !processed[r][c1]){
             q.add(new Node(r, c1, RIGHT));
         }
         while(c2-1>=0 && map[r][c2-1]!=WALL){
             c2--;
             if(map[r][c2]==END) return new Node(r,c2,LEFT);
         }
-        if(c2-1>=0){
+        if(c2-1>=0 && !processed[r][c2]){
+
             q.add(new Node(r, c2,LEFT));
         }
         return null;
