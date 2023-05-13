@@ -96,7 +96,6 @@ public class Dream {
             if(map[r][c2]==END) return new Node(r,c2,LEFT);
         }
         if(c2-1>=0 && !processed[r][c2]){
-
             q.add(new Node(r, c2,LEFT));
         }
         return null;
